@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+}
+
+
+.ui.main.container{
+  margin-top: 3em;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 900px;
+  overflow: auto;
+  }
+  .table-wrapper-scroll-y {
+  display: block;
+  }
+
+
