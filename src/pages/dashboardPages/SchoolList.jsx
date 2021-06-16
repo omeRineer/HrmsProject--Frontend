@@ -1,18 +1,22 @@
-import React,{useEffect,useState} from 'react';
-import SchoolService from '../../services/schoolService'
+import React, { useEffect, useState } from "react";
+import SchoolService from "../../services/schoolService";
+import SchoolForm from './forms/SchoolForm'
 
 export default function SchoolList() {
+  const [schools, setSchools] = useState([]);
 
-    const [schools, setSchools] = useState([])
+  useEffect(() => {
+    let schoolService = new SchoolService();
+    schoolService.getSchools().then((result) => setSchools(result.data.data));
+  }, []);
 
-    useEffect(()=>{
-        let schoolService=new SchoolService()
-        schoolService.getSchools().then(result=>setSchools(result.data.data))
-    })
+  return (
+    <div className="table-wrapper-scroll-y my-custom-scrollbar">
 
-    return (
-        <div className="table-wrapper-scroll-y my-custom-scrollbar">
-            <table class="table table-striped table-bordered mb-0">
+      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#schoolModal" style={{float:"left"}}>New School</button>
+      <SchoolForm/>
+      
+      <table class="table table-striped table-bordered mb-0">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -23,7 +27,7 @@ export default function SchoolList() {
         </thead>
         <tbody>
           {schools.map((school) => (
-            <tr>
+            <tr key={school.id}>
               <th scope="row">{school.id}</th>
               <td>{school.schoolName}</td>
               <td>
@@ -36,6 +40,6 @@ export default function SchoolList() {
           ))}
         </tbody>
       </table>
-        </div>
-    )
+    </div>
+  );
 }

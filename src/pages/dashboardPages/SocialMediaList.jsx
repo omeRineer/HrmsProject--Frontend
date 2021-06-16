@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SocialMediaService from '../../services/socialMediaService'
+import SocialMediaForm from './forms/SocialMediaForm'
 
 export default function SocialMediaList() {
 
@@ -8,10 +9,14 @@ export default function SocialMediaList() {
     useEffect(()=>{
         let socialMediaService=new SocialMediaService()
         socialMediaService.getSocialMedias().then(result=>setSocialMedias(result.data.data))
-    })
+    },[])
 
   return (
     <div className="table-wrapper-scroll-y my-custom-scrollbar">
+
+      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#socialMediaModal" style={{float:"left"}}>New Social Media</button>
+      <SocialMediaForm/>
+      
       <table class="table table-striped table-bordered mb-0">
         <thead>
           <tr>
@@ -23,7 +28,7 @@ export default function SocialMediaList() {
         </thead>
         <tbody>
           {socialMedias.map((socialMedia) => (
-            <tr>
+            <tr key={socialMedia.id}>
               <th scope="row">{socialMedia.id}</th>
               <td>{socialMedia.socialMediaName}</td>
               <td>

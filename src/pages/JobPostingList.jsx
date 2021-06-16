@@ -10,7 +10,7 @@ export default function JobPostingList() {
     jobPostingService
       .getPostings()
       .then((result) => setJobPostings(result.data.data));
-  });
+  },[]);
   
   return (
     <div>
@@ -27,7 +27,7 @@ export default function JobPostingList() {
 
         <Table.Body>
           {jobPostings.map((jobPostings) => (
-            <Table.Row>
+            <Table.Row key={jobPostings.id}>
               <Table.Cell>{jobPostings.employer.companyName}</Table.Cell>
               <Table.Cell>{jobPostings.jobPosition.positionName}</Table.Cell>
               <Table.Cell>{jobPostings.city.cityName}</Table.Cell>

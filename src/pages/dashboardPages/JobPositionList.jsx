@@ -1,5 +1,6 @@
 import React, { useEffect,useState } from "react"
 import JobPositionService from "../../services/jobPositionService";
+import JobPositionForm from './forms/JobPositionForm'
 
 export default function JobPositionList() {
   const [jobPositions, setJobPositions] = useState([])
@@ -9,10 +10,14 @@ export default function JobPositionList() {
       jobPositionService.getJobPositions().then(result=>(
         setJobPositions(result.data.data)
       ))
-  })
+  },[])
   
   return (
     <div className="table-wrapper-scroll-y my-custom-scrollbar">
+
+      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#jobPositionModal" style={{float:"left"}}>New Position</button>
+      <JobPositionForm/>
+
       <table class="table table-striped table-bordered mb-0">
         <thead>
           <tr>
@@ -24,7 +29,7 @@ export default function JobPositionList() {
         </thead>
         <tbody>
           {jobPositions.map((jobPositions) => (
-            <tr>
+            <tr key={jobPositions.id}>
               <th scope="row">{jobPositions.id}</th>
               <td>{jobPositions.positionName}</td>
               <td>

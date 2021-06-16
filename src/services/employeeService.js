@@ -4,4 +4,6 @@ export default class EmployeeService{
     getEmployees(){
         return axios.get("http://localhost:8080/api/employee/getall")
     }
+
+    
 }

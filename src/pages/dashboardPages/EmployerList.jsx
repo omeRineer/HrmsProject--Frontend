@@ -8,7 +8,7 @@ export default function EmployerList() {
   useEffect(() => {
     let employerService=new EmployerService()
     employerService.getEmployers().then(result=>setEmployers(result.data.data))
-  })
+  },[])
 
   return (
     <div className="table-wrapper-scroll-y my-custom-scrollbar">
@@ -24,7 +24,7 @@ export default function EmployerList() {
         </thead>
         <tbody>
           {employers.map((employer) => (
-            <tr>
+            <tr key={employer.id}>
               <th scope="row">{employer.id}</th>
               <td>{employer.companyName}</td>
               <td>{employer.webSite}</td>

@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect,useState } from "react";
 import EmployeeService from '../../services/employeeService'
-
 export default function EmployeeList() {
 
     const [employees, setEmployees] = useState([])
@@ -9,7 +8,7 @@ export default function EmployeeList() {
     useEffect(()=>{
         let employeeService=new EmployeeService()
         employeeService.getEmployees().then(result=>setEmployees(result.data.data))
-    })
+    },[])
 
   return (
     <div className="table-wrapper-scroll-y my-custom-scrollbar">
@@ -25,7 +24,7 @@ export default function EmployeeList() {
         </thead>
         <tbody>
           {employees.map((employee) => (
-            <tr>
+            <tr key={employee.id}>
               <th scope="row">{employee.id}</th>
               <td>{employee.firstName}</td>
               <td>{employee.lastName}</td>

@@ -1,18 +1,24 @@
-import React,{useEffect,useState} from 'react'
-import ProgrammingLanguageService from '../../services/programmingLanguageService'
+import React, { useEffect, useState } from "react";
+import ProgrammingLanguageService from "../../services/programmingLanguageService";
+import ProgrammingLanguageForm from './forms/ProgrammingLanguageForm'
 
 export default function ProgrammingLanguageList() {
+  const [porgrammingLanguages, setporgrammingLanguages] = useState([]);
 
-    const [porgrammingLanguages, setporgrammingLanguages] = useState([])
+  useEffect(() => {
+    let programmingLanguageService = new ProgrammingLanguageService();
+    programmingLanguageService
+      .getProgrammingLanguages()
+      .then((result) => setporgrammingLanguages(result.data.data));
+  }, []);
 
-    useEffect(()=>{
-        let programmingLanguageService=new ProgrammingLanguageService()
-        programmingLanguageService.getProgrammingLanguages().then(result=>setporgrammingLanguages(result.data.data))
-    })
+  return (
+    <div className="table-wrapper-scroll-y my-custom-scrollbar">
 
-    return (
-        <div className="table-wrapper-scroll-y my-custom-scrollbar">
-            <table className="table table-striped table-bordered mb-0">
+      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#programmingLanguageModal" style={{float:"left"}}>New Programming Language</button>
+      <ProgrammingLanguageForm/>
+      
+      <table className="table table-striped table-bordered mb-0">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -23,7 +29,7 @@ export default function ProgrammingLanguageList() {
         </thead>
         <tbody>
           {porgrammingLanguages.map((programmingLanguage) => (
-            <tr>
+            <tr key={programmingLanguage.id}>
               <th scope="row">{programmingLanguage.id}</th>
               <td>{programmingLanguage.programmingLanguageName}</td>
               <td>
@@ -36,6 +42,6 @@ export default function ProgrammingLanguageList() {
           ))}
         </tbody>
       </table>
-        </div>
-    )
+    </div>
+  );
 }
